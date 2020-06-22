@@ -4,22 +4,6 @@ import cats.data.State
 
 object Main {
   def main(args: Array[String]) {
-    val func = new Function[Int, Int] {
-      // implement abstract method
-      def apply(v1: Int): Int = v1 - 1
-    }
-    println(func(10))       // => 9
-    println(func.apply(10)) // => 9
-    println(
-      func.isInstanceOf[Int => Int]
-    ) // => true (`Int => Int` == `Function1[Int, Int]`)
-
-    val func2 = (x: Int) => { x * 2 }
-    println(func2(3)) // => 6
-
-    val func3 = { x: Int => x * 3 }
-    println(func3(4)) // => 12
-
     var count = 0
     val countUp = { diff: Int =>
       count += diff
