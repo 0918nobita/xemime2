@@ -59,4 +59,18 @@ class Test extends AnyFunSuite {
     assert(x == 10)
     assert(y == 20)
   }
+
+  test("Tuples") {
+    val tuple = (1, "str")
+    assert(tuple._1 == 1)
+    assert(tuple._2 == "str")
+
+    val (a, b) = tuple
+    assert(a == 1)
+    assert(b == "str")
+
+    val (c, d) = tuple.swap
+    assert(c == "str")
+    assert(d == 1)
+  }
 }

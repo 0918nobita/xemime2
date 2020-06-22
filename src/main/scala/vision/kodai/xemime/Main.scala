@@ -4,13 +4,6 @@ import cats.data.State
 
 object Main {
   def main(args: Array[String]) {
-    val tuple = (1, "str")
-    println(tuple._1) // => 1
-    println(tuple._2) // => "str"
-    val (a, b) = tuple
-    println((b + "!", a + 2)) // => ("str!", 3)
-    println(tuple.swap)       // => ("str", 1)
-
     val func = new Function[Int, Int] {
       // implement abstract method
       def apply(v1: Int): Int = v1 - 1
