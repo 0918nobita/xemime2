@@ -40,6 +40,13 @@ object Main {
     val p = new Point(1, 2)
     println(Point.shiftInXDirection(p)(4)) // => Point(5, 2)
 
+    val tuple = (1, "str")
+    println(tuple._1) // => 1
+    println(tuple._2) // => "str"
+    val (a, b) = tuple
+    println((b + "!", a + 2)) // => ("str!", 3)
+    println(tuple.swap)       // => ("str", 1)
+
     val state  = State[Int, Int](s => (s + 1, s * 2))
     val state2 = state.flatMap(_ => state)
     println(state2.run(1).value) // => (3, 4)
