@@ -124,6 +124,13 @@ class Test extends AnyFunSuite {
     assert(listC eq listD)
   }
 
+  test("Access values of Lists") {
+    val list = List(1, 2, 3)
+    assert(list(2) == 3)
+    assertThrows[IndexOutOfBoundsException] { list(4) }
+    assert(list.headOption.contains(1))
+    assert(list.tail == List(2, 3))
+  }
   test("Case class") {
     val point = Point2(15, 30)
     assert(point.toString == "Point2(15,30)")
