@@ -4,20 +4,6 @@ import cats.data.State
 
 object Main {
   def main(args: Array[String]) {
-    val someValue: Option[Double] = Some(20.0)
-    val doubleValue = someValue match {
-      case Some(v) => v
-      case None    => 0.0
-    }
-    println(doubleValue) // => 20.0
-
-    val noneValue: Option[Double] = None
-    val doubleValue2 = noneValue match {
-      case Some(v) => v
-      case None    => 0.0
-    }
-    println(doubleValue2) // => 0.0
-
     val number: Option[Int]   = Some(3)
     val noNumber: Option[Int] = None
     val result1               = number.map(_ * 1.5)
