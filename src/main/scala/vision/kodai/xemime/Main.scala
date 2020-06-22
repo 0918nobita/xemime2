@@ -65,6 +65,16 @@ object Main {
     val func3 = { x: Int => x * 3 }
     println(func3(4)) // => 12
 
+    var count = 0
+
+    def countUp = { diff: Int =>
+      count += diff
+      count
+    }
+
+    println(countUp(1)) // => 1
+    println(countUp(3)) // => 4
+
     val state  = State[Int, Int](s => (s + 1, s * 2))
     val state2 = state.flatMap(_ => state)
     println(state2.run(1).value) // => (3, 4)
