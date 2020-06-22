@@ -56,8 +56,14 @@ object Main {
       // implement abstract method
       def apply(v1: Int): Int = v1 - 1
     }
+    println(func(10))       // => 9
+    println(func.apply(10)) // => 9
 
-    println(func(10)) // => 9
+    val func2 = (x: Int) => { x * 2 }
+    println(func2(3)) // => 6
+
+    val func3 = { x: Int => x * 3 }
+    println(func3(4)) // => 12
 
     val state  = State[Int, Int](s => (s + 1, s * 2))
     val state2 = state.flatMap(_ => state)
