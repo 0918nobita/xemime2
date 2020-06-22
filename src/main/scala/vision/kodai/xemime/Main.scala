@@ -8,12 +8,6 @@ object Main {
   }
 
   def main(args: Array[String]): Unit = {
-    val state  = State[Int, Int](s => (s + 1, s * 2))
-    val state2 = state.flatMap(_ => state)
-    println(state2.run(1).value)
-
-    println(new Point(1, 2)) // => Point(1, 2)
-
     val value1 = maybeItWillReturnSomething(true)
     val value2 = maybeItWillReturnSomething(false)
     println(value1.getOrElse("Placeholder")) // => Found value
@@ -42,5 +36,12 @@ object Main {
 
     println(number.fold(ifEmpty = 8)(f = _ * 2))   // => 6
     println(noNumber.fold(ifEmpty = 8)(f = _ * 2)) // => 8
+
+    val p = new Point(1, 2)
+    println(Point.shiftInXDirection(p)(4)) // => Point(5, 2)
+
+    val state  = State[Int, Int](s => (s + 1, s * 2))
+    val state2 = state.flatMap(_ => state)
+    println(state2.run(1).value) // => (3, 4)
   }
 }
