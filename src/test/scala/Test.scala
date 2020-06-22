@@ -101,4 +101,26 @@ class Test extends AnyFunSuite {
     assert(countUp(1) == 1)
     assert(countUp(3) == 4)
   }
+
+  test("List.map") {
+    val makeUpper = { xs: List[String] => xs map { _.toUpperCase } }
+    val actual   = makeUpper(List("a", "b", "c"))
+    val expected = List("A", "B", "C")
+    assert(actual == expected)
+  }
+
+  test("List Comparison") {
+    val listA = List(1, 2, 3)
+    val listB = List(1, 2, 3)
+    assert(listA == listB)
+    assert(!(listA eq listB))
+
+    val listC: List[String] = Nil
+    val listD: List[Int]    = Nil
+    assert(listC == Nil)
+    assert(listD == Nil)
+    assert(listC eq Nil)
+    assert(listD eq Nil)
+    assert(listC eq listD)
+  }
 }
