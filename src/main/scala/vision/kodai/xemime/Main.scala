@@ -69,14 +69,15 @@ object Main {
     println(func3(4)) // => 12
 
     var count = 0
-
-    def countUp = { diff: Int =>
+    val countUp = { diff: Int =>
       count += diff
       count
     }
-
     println(countUp(1)) // => 1
     println(countUp(3)) // => 4
+
+    val makeUpper = { xs: List[String] => xs map { _.toUpperCase } }
+    println(makeUpper(List("a", "b", "c"))) // => List(A, B, C)
 
     val state  = State[Int, Int](s => (s + 1, s * 2))
     val state2 = state.flatMap(_ => state)
