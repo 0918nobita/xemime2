@@ -58,6 +58,9 @@ object Main {
     }
     println(func(10))       // => 9
     println(func.apply(10)) // => 9
+    println(
+      func.isInstanceOf[Int => Int]
+    ) // => true (`Int => Int` == `Function1[Int, Int]`)
 
     val func2 = (x: Int) => { x * 2 }
     println(func2(3)) // => 6
