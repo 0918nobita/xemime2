@@ -18,5 +18,19 @@ object Main {
     val value2 = maybeItWillReturnSomething(false)
     println(value1.getOrElse("Placeholder")) // => Found value
     println(value2.getOrElse("Placeholder")) // => Placeholder
+
+    val someValue: Option[Double] = Some(20.0)
+    val doubleValue = someValue match {
+      case Some(v) => v
+      case None    => 0.0
+    }
+    println(doubleValue) // => 20.0
+
+    val noneValue: Option[Double] = None
+    val doubleValue2 = noneValue match {
+      case Some(v) => v
+      case None    => 0.0
+    }
+    println(doubleValue2) // => 0.0
   }
 }
