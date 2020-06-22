@@ -131,6 +131,14 @@ class Test extends AnyFunSuite {
     assert(list.headOption.contains(1))
     assert(list.tail == List(2, 3))
   }
+
+  test("Filter Lists / Immutability") {
+    val list = List(4, 5, 6)
+    assert(list.filter({ _ % 2 == 0 }) == List(4, 6))
+    assert(list.filterNot({ _ % 3 == 0 }) == List(4, 5))
+    assert(list === List(4, 5, 6))
+  }
+
   test("Case class") {
     val point = Point2(15, 30)
     assert(point.toString == "Point2(15,30)")
