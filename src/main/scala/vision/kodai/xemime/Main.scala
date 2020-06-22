@@ -39,6 +39,11 @@ object Main {
 
     val p = new Point(1, 2)
     println(Point.shiftInXDirection(p)(4)) // => Point(5, 2)
+    val p2 = new Point(50, 10) {
+      override def toString = "modified"
+    }
+    println(p2) // => modified
+    println(p)  // => Point(1, 2)
 
     val tuple = (1, "str")
     println(tuple._1) // => 1
@@ -46,6 +51,13 @@ object Main {
     val (a, b) = tuple
     println((b + "!", a + 2)) // => ("str!", 3)
     println(tuple.swap)       // => ("str", 1)
+
+    val func = new Function[Int, Int] {
+      // implement abstract method
+      def apply(v1: Int): Int = v1 - 1
+    }
+
+    println(func(10)) // => 9
 
     val state  = State[Int, Int](s => (s + 1, s * 2))
     val state2 = state.flatMap(_ => state)
