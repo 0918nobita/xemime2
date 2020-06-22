@@ -26,4 +26,16 @@ class Test extends AnyFunSuite {
     }
     assert(doubleValue2 == 0.0)
   }
+
+  test("Option.map/fold") {
+    val number: Option[Int]   = Some(3)
+    val noNumber: Option[Int] = None
+    val result1               = number.map(_ * 1.5)
+    val result2               = noNumber.map(_ * 1.5)
+    assert(result1.contains(4.5))
+    assert(result2.isEmpty)
+
+    assert(number.fold(ifEmpty = 8)(f = _ * 2) == 6)
+    assert(noNumber.fold(ifEmpty = 8)(f = _ * 2) == 8)
+  }
 }

@@ -4,16 +4,6 @@ import cats.data.State
 
 object Main {
   def main(args: Array[String]) {
-    val number: Option[Int]   = Some(3)
-    val noNumber: Option[Int] = None
-    val result1               = number.map(_ * 1.5)
-    val result2               = noNumber.map(_ * 1.5)
-    println(result1) // => Some(4.5)
-    println(result2) // => None
-
-    println(number.fold(ifEmpty = 8)(f = _ * 2))   // => 6
-    println(noNumber.fold(ifEmpty = 8)(f = _ * 2)) // => 8
-
     val p = new Point(1, 2)
     println(Point.shiftInXDirection(p)(4)) // => Point(5, 2)
     val p2 = new Point(50, 10) {
