@@ -4,14 +4,6 @@ import cats.data.State
 
 object Main {
   def main(args: Array[String]) {
-    val p = new Point(1, 2)
-    println(Point.shiftInXDirection(p)(4)) // => Point(5, 2)
-    val p2 = new Point(50, 10) {
-      override def toString = "modified"
-    }
-    println(p2) // => modified
-    println(p)  // => Point(1, 2)
-
     val tuple = (1, "str")
     println(tuple._1) // => 1
     println(tuple._2) // => "str"

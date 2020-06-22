@@ -1,5 +1,7 @@
 import org.scalatest.funsuite.AnyFunSuite
 
+import vision.kodai.xemime.Point
+
 class Test extends AnyFunSuite {
   test("Option.getOrElse") {
     def maybeItWillReturnSomething(cond: Boolean): Option[String] =
@@ -37,5 +39,24 @@ class Test extends AnyFunSuite {
 
     assert(number.fold(ifEmpty = 8)(f = _ * 2) == 6)
     assert(noNumber.fold(ifEmpty = 8)(f = _ * 2) == 8)
+  }
+
+  test("Class definition / Instantiation") {
+    val p = Point(1, 2)
+    assert(Point.shiftInXDirection(p)(4) == Point(5, 2))
+
+    val p2 = new Point(50, 10) {
+      override def toString = "modified"
+    }
+
+    assert(p2.toString == "modified")
+    assert(p.toString == "Point(1, 2)")
+  }
+
+  test("Extractor Objects") {
+    val p           = Point(10, 20)
+    val Point(x, y) = p
+    assert(x == 10)
+    assert(y == 20)
   }
 }
