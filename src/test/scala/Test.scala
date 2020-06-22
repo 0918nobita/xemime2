@@ -1,6 +1,6 @@
 import org.scalatest.funsuite.AnyFunSuite
 
-import vision.kodai.xemime.Point
+import vision.kodai.xemime.{Point, Point2}
 
 class Test extends AnyFunSuite {
   test("Option.getOrElse") {
@@ -122,5 +122,19 @@ class Test extends AnyFunSuite {
     assert(listC eq Nil)
     assert(listD eq Nil)
     assert(listC eq listD)
+  }
+
+  test("Case class") {
+    val point = Point2(15, 30)
+    assert(point.toString == "Point2(15,30)")
+    assert(point.x == 15)
+    assert(point.y == 30)
+    assert(point == Point2(15, 30))
+
+    val Point2(x, y) = point
+    assert(x == 15)
+    assert(y == 30)
+
+    assert(Point2.unapply(Point2(1, 2)).contains((1, 2)))
   }
 }
