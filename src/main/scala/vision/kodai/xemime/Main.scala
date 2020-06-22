@@ -32,5 +32,12 @@ object Main {
       case None    => 0.0
     }
     println(doubleValue2) // => 0.0
+
+    val number: Option[Int]   = Some(3)
+    val noNumber: Option[Int] = None
+    val result1               = number.map(_ * 1.5)
+    val result2               = noNumber.map(_ * 1.5)
+    println(result1) // => Some(4.5)
+    println(result2) // => None
   }
 }
