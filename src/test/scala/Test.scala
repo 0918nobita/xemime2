@@ -139,6 +139,12 @@ class Test extends AnyFunSuite {
     assert(list === List(4, 5, 6))
   }
 
+  test("Reduce Lists") {
+    val list = List(1, 3, 5, 7)
+    assert(16 == list.foldLeft(z = 0)(op = (acc, elem) => acc + elem))
+    assert(26 == list.foldLeft(10) { _ + _ })
+  }
+
   test("Case class") {
     val point = Point2(15, 30)
     assert(point.toString == "Point2(15,30)")
