@@ -4,14 +4,6 @@ import cats.data.State
 
 object Main {
   def main(args: Array[String]) {
-    var count = 0
-    val countUp = { diff: Int =>
-      count += diff
-      count
-    }
-    println(countUp(1)) // => 1
-    println(countUp(3)) // => 4
-
     val makeUpper = { xs: List[String] => xs map { _.toUpperCase } }
     println(makeUpper(List("a", "b", "c"))) // => List(A, B, C)
 

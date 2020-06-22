@@ -91,4 +91,14 @@ class Test extends AnyFunSuite {
     val func3 = { x: Int => x * 3 }
     assert(func3(4) == 12)
   }
+
+  test("Closures") {
+    var count = 0
+    val countUp = { diff: Int =>
+      count += diff
+      count
+    }
+    assert(countUp(1) == 1)
+    assert(countUp(3) == 4)
+  }
 }
