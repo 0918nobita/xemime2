@@ -39,5 +39,8 @@ object Main {
     val result2               = noNumber.map(_ * 1.5)
     println(result1) // => Some(4.5)
     println(result2) // => None
+
+    println(number.fold(ifEmpty = 8)(f = _ * 2))   // => 6
+    println(noNumber.fold(ifEmpty = 8)(f = _ * 2)) // => 8
   }
 }
