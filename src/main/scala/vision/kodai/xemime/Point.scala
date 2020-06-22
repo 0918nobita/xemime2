@@ -1,6 +1,6 @@
 package vision.kodai.xemime
 
-class Point(val x: Int, val y: Int) {
+class Point(private val x: Int, private val y: Int) {
   override def toString = s"Point($x, $y)"
 }
 
