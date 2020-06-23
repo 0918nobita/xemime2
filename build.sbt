@@ -8,11 +8,15 @@ scalaVersion := "2.13.2"
 fork := true
 fork in Test := true
 
-lazy val osName = System.getProperty("os.name") match {
-  case n if n.startsWith("Linux")   => "linux"
-  case n if n.startsWith("Mac")     => "mac"
-  case n if n.startsWith("Windows") => "win"
-  case _                            => throw new Exception("Unknown platform")
+lazy val osName = {
+  Map(
+    "Linux"   -> "linux",
+    "Mac"     -> "mac",
+    "Windows" -> "win"
+  ).getOrElse(
+    System.getProperty("os.name"),
+    throw new Exception("Unknown platform")
+  )
 }
 
 lazy val javaFXModules = Seq("controls", "fxml", "media")
