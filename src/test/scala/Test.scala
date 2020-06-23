@@ -1,20 +1,6 @@
 import org.scalatest.funsuite.AnyFunSuite
 
 class Test extends AnyFunSuite {
-  test("Tuples") {
-    val tuple = (1, "str")
-    assert(tuple._1 == 1)
-    assert(tuple._2 == "str")
-
-    val (a, b) = tuple
-    assert(a == 1)
-    assert(b == "str")
-
-    val (c, d) = tuple.swap
-    assert(c == "str")
-    assert(d == 1)
-  }
-
   test("Functions") {
     val func = new Function[Int, Int] {
       // implement abstract method
