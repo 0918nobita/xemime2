@@ -4,6 +4,10 @@ version := "0.1"
 
 scalaVersion := "2.13.2"
 
+// Run in separate VM, so there are no issues with double initialization of JavaFX
+fork := true
+fork in Test := true
+
 lazy val osName = System.getProperty("os.name") match {
   case n if n.startsWith("Linux")   => "linux"
   case n if n.startsWith("Mac")     => "mac"
