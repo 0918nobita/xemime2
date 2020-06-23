@@ -22,9 +22,10 @@ libraryDependencies ++= javaFXModules.map(m =>
 )
 
 libraryDependencies ++= Seq(
-  "org.typelevel"              %% "cats-core"    % "2.1.1",
-  "com.github.julien-truffaut" %% "monocle-core" % "2.0.5",
-  "org.scalafx"                %% "scalafx"      % "14-R19",
-  "org.scalatest"              %% "scalatest"    % "3.2.0"  % Test,
-  "org.scalacheck"             %% "scalacheck"   % "1.14.3" % Test
+  "org.typelevel"              %% "cats-core"                % "2.1.1",
+  "com.github.julien-truffaut" %% "monocle-core"             % "2.0.5",
+  "org.scala-lang.modules"     %% "scala-parser-combinators" % "1.1.2",
+  "org.scalafx"                %% "scalafx"                  % "14-R19",
+  "org.scalatest"              %% "scalatest"                % "3.2.0"  % Test,
+  "org.scalacheck"             %% "scalacheck"               % "1.14.3" % Test
 )
