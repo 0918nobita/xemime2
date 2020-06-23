@@ -1,27 +1,6 @@
 import org.scalatest.funsuite.AnyFunSuite
 
-import vision.kodai.xemime.{Point, Point2}
-
 class Test extends AnyFunSuite {
-  test("Class definition / Instantiation") {
-    val p = Point(1, 2)
-    assert(Point.shiftInXDirection(p)(4) == Point(5, 2))
-
-    val p2 = new Point(50, 10) {
-      override def toString = "modified"
-    }
-
-    assert(p2.toString == "modified")
-    assert(p.toString == "Point(1, 2)")
-  }
-
-  test("Extractor Objects") {
-    val p           = Point(10, 20)
-    val Point(x, y) = p
-    assert(x == 10)
-    assert(y == 20)
-  }
-
   test("Tuples") {
     val tuple = (1, "str")
     assert(tuple._1 == 1)
@@ -118,20 +97,6 @@ class Test extends AnyFunSuite {
     val list = List(1, 3, 5, 7)
     assert(16 == list.foldLeft(z = 0)(op = (acc, elem) => acc + elem))
     assert(26 == list.foldLeft(10) { _ + _ })
-  }
-
-  test("Case class") {
-    val point = Point2(15, 30)
-    assert(point.toString == "Point2(15,30)")
-    assert(point.x == 15)
-    assert(point.y == 30)
-    assert(point == Point2(15, 30))
-
-    val Point2(x, y) = point
-    assert(x == 15)
-    assert(y == 30)
-
-    assert(Point2.unapply(Point2(1, 2)).contains((1, 2)))
   }
 
   test("(->) operator") {
