@@ -1,4 +1,4 @@
-import org.scalacheck.Prop
+import org.scalacheck.{Arbitrary, Gen, Prop}
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatestplus.scalacheck.Checkers
 
@@ -11,9 +11,17 @@ class ListTest extends AnyFunSuite with Checkers {
   }
 
   test("Concat Lists") {
-    val forward  = List(1, 3)
-    val backward = List(5, 7)
-    assert(forward ::: backward == List(1, 3, 5, 7))
+    val gen = for {
+      list  <- Gen.nonEmptyListOf(Arbitrary.arbitrary[Int])
+      index <- Gen.chooseNum(0, list.size - 1)
+    } yield (list, index)
+
+    check(Prop.forAll(gen) {
+      case (list, index) =>
+        val forward  = list.slice(0, index)
+        val backward = list.slice(index, list.size)
+        forward ::: backward == list
+    })
   }
 
   test("Access values of Lists") {
@@ -31,9 +39,7 @@ class ListTest extends AnyFunSuite with Checkers {
       }
     })
 
-    check(Prop.forAll { (n: Int, l: List[Int]) =>
-      (n :: l).tail == l
-    })
+    check(Prop.forAll { (n: Int, l: List[Int]) => (n :: l).tail == l })
   }
 
   test("List Comparison") {
