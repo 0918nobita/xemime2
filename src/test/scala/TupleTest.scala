@@ -1,22 +1,26 @@
+import org.scalacheck.Prop
 import org.scalatest.funsuite.AnyFunSuite
+import org.scalatestplus.scalacheck.Checkers
 
-class TupleTest extends AnyFunSuite {
+class TupleTest extends AnyFunSuite with Checkers {
   test("Create Tuples / Access elements") {
-    val tuple = (1, "str")
-    assert(tuple._1 == 1)
-    assert(tuple._2 == "str")
+    check(Prop.forAll({ (a: Int, b: String) =>
+      val tuple = (a, b)
+      tuple._1 == a && tuple._2 == b
+    }))
   }
 
   test("Deconstruct Tuples") {
-    val (a, head :: tail) = ("foo", List(1, 2, 3))
-    assert(a == "foo")
-    assert(head == 1)
-    assert(tail == List(2, 3))
+    check(Prop.forAll({ (tuple: (String, List[Int])) =>
+      val (a, list) = tuple
+      a == tuple._1 && list == tuple._2
+    }))
   }
 
   test("Swap Tuples") {
-    val (x, y) = (7, "bar").swap
-    assert(x == "bar")
-    assert(y == 7)
+    check(Prop.forAll({ (tuple: (Int, String)) =>
+      val (x, y) = tuple.swap
+      x == tuple._2 && y == tuple._1
+    }))
   }
 }
