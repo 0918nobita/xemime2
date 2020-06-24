@@ -1,6 +1,5 @@
-import org.scalatest.funsuite.AnyFunSuite
-
 import monocle.Lens
+import org.scalatest.funsuite.AnyFunSuite
 
 class MonocleTest extends AnyFunSuite {
   test("Create / Compose / Use Lens") {

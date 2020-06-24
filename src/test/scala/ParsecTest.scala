@@ -1,5 +1,4 @@
 import org.scalatest.funsuite.AnyFunSuite
-
 import scala.util.parsing.combinator._
 
 class ParsecTest extends AnyFunSuite {
