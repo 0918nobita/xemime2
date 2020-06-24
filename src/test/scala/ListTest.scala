@@ -1,6 +1,8 @@
+import org.scalacheck.Prop
 import org.scalatest.funsuite.AnyFunSuite
+import org.scalatestplus.scalacheck.Checkers
 
-class ListTest extends AnyFunSuite {
+class ListTest extends AnyFunSuite with Checkers {
   test("Cons") {
     val list = List(1, 3, 5, 7)
     // right-associative operator
@@ -20,6 +22,18 @@ class ListTest extends AnyFunSuite {
     assertThrows[IndexOutOfBoundsException] { list(4) }
     assert(list.headOption.contains(1))
     assert(list.tail == List(2, 3))
+
+    check(Prop.forAll { l: List[Int] =>
+      if (l.isEmpty) {
+        Prop.throws(classOf[NoSuchElementException]) { l.head }
+      } else {
+        l.head == l(0)
+      }
+    })
+
+    check(Prop.forAll { (n: Int, l: List[Int]) =>
+      (n :: l).tail == l
+    })
   }
 
   test("List Comparison") {
