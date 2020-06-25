@@ -48,10 +48,23 @@ class MapTest extends AnyFunSuite with Checkers {
     assertResult("JP")(myMap(81))
   }
 
-  test("getOrElse / withDefaultValue") {
-    val myMap = Map("foo" -> "bar")
-    assert(myMap == myMap - "baz")
+  test("Remove existing entries") {
+    val baseMap = Map("foo" -> 0, "bar" -> 1, "baz" -> 2)
+    val map1    = baseMap - "foo"
+    assert(!map1.contains("foo"))
+    assert(baseMap.contains("foo"))
 
+    val map2 = baseMap -- List("foo", "baz")
+    assert(!map2.contains("foo"))
+    assert(!map2.contains("baz"))
+  }
+
+  test("Remove nonexistent entries") {
+    val myMap = Map(1 -> "First", 2 -> "Second")
+    assert(myMap - 3 == myMap)
+  }
+
+  test("getOrElse / withDefaultValue") {
     val gen = for {
       baseMap <- Gen.mapOf(Arbitrary.arbitrary[(String, Int)])
       key     <- Arbitrary.arbitrary[String]
