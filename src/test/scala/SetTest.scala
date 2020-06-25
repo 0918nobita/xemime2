@@ -42,6 +42,12 @@ class SetTest extends AnyFunSuite with Checkers {
     assert(map4 == Set("Ohio", "Iowa"))
   }
 
+  test("Intersection") {
+    val map1 = Set("a", "b", "c", "d")
+    val map2 = Set("c", "d", "e", "f")
+    assert((map1 intersect map2) == Set("c", "d"))
+  }
+
   test("Comparison") {
     val set1 = Set("a", "b", "c")
     val set2 = Set("b", "c", "a")
