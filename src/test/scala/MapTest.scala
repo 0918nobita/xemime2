@@ -79,4 +79,12 @@ class MapTest extends AnyFunSuite with Checkers {
           (map withDefaultValue "missing key")(key) == "missing key"
     })
   }
+
+  test("Comparison") {
+    val map1 = Map(0 -> "foo", 1 -> "bar", 2 -> "baz")
+    val map2 = Map(0 -> "bar", 1 -> "foo", 2 -> "baz")
+    val map3 = Map(2 -> "baz", 1 -> "bar", 0 -> "foo")
+    assert(map1 != map2)
+    assert(map1 == map3)
+  }
 }
