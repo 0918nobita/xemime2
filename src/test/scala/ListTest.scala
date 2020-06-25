@@ -10,7 +10,7 @@ class ListTest extends AnyFunSuite with Checkers {
     assert(-1 :: list == List(-1, 1, 3, 5, 7))
   }
 
-  test("Concat Lists") {
+  test("Concatenation") {
     val gen = for {
       list  <- Gen.nonEmptyListOf(Arbitrary.arbitrary[Int])
       index <- Gen.chooseNum(0, list.size - 1)
@@ -24,7 +24,7 @@ class ListTest extends AnyFunSuite with Checkers {
     })
   }
 
-  test("Access values of Lists") {
+  test("Access values") {
     val list = List(1, 2, 3)
     assert(list(2) == 3)
     assertThrows[IndexOutOfBoundsException] { list(4) }
@@ -42,7 +42,7 @@ class ListTest extends AnyFunSuite with Checkers {
     check(Prop.forAll { (n: Int, l: List[Int]) => (n :: l).tail == l })
   }
 
-  test("List Comparison") {
+  test("Comparison") {
     val listA = List(1, 2, 3)
     val listB = List(1, 2, 3)
     assert(listA == listB)
@@ -57,23 +57,22 @@ class ListTest extends AnyFunSuite with Checkers {
     assert(listC eq listD)
   }
 
-  test("List.map") {
+  test("Mapping") {
     val makeUpper = { xs: List[String] => xs map { _.toUpperCase } }
-    val actual   = makeUpper(List("a", "b", "c"))
-    val expected = List("A", "B", "C")
-    assert(actual == expected)
+    val result = makeUpper(List("a", "b", "c"))
+    assert(result == List("A", "B", "C"))
   }
 
   test("Filter Lists / Immutability") {
     val list = List(4, 5, 6)
-    assert(list.filter({ _ % 2 == 0 }) == List(4, 6))
-    assert(list.filterNot({ _ % 3 == 0 }) == List(4, 5))
+    assertResult(List(4, 6))(list.filter({ _ % 2 == 0 }))
+    assertResult(List(4, 5))(list.filterNot({ _ % 3 == 0 }))
     assert(list === List(4, 5, 6))
   }
 
   test("Reduce Lists") {
     val list = List(1, 3, 5, 7)
-    assert(16 == list.foldLeft(z = 0)(op = (acc, elem) => acc + elem))
-    assert(26 == list.foldLeft(10) { _ + _ })
+    assertResult(16)(list.foldLeft(z = 0)(op = (acc, elem) => acc + elem))
+    assertResult(26)(list.foldLeft(10) { _ + _ })
   }
 }
