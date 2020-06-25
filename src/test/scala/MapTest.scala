@@ -47,4 +47,23 @@ class MapTest extends AnyFunSuite with Checkers {
     assertResult("JP")(myMap("Japan"))
     assertResult("JP")(myMap(81))
   }
+
+  test("getOrElse / withDefaultValue") {
+    val myMap = Map("foo" -> "bar")
+    assert(myMap == myMap - "baz")
+
+    val gen = for {
+      baseMap <- Gen.mapOf(Arbitrary.arbitrary[(String, Int)])
+      key     <- Arbitrary.arbitrary[String]
+    } yield {
+      (key, baseMap - key)
+    }
+
+    check(Prop.forAll(gen) {
+      case (key, map) =>
+        Prop.throws(classOf[NoSuchElementException]) { map(key) } &&
+          map.getOrElse(key, "missing key") == "missing key" &&
+          (map withDefaultValue "missing key")(key) == "missing key"
+    })
+  }
 }
