@@ -26,6 +26,19 @@ class MapTest extends AnyFunSuite with Checkers {
 
   test("Values") {
     val gen = Gen.nonEmptyMap(Arbitrary.arbitrary[(String, String)])
-    check(Prop.forAll(gen) { m => m.values.head == m.head._2 })
+    check(Prop.forAll(gen) { m =>
+      val values = m.values
+      values.head == m.head._2 &&
+      values.last == m.last._2
+    })
+  }
+
+  test("Update existing entries") {
+    check(Prop.forAll {
+      (baseMap: Map[String, Int], key: String, value: Int, newValue: Int) =>
+        val oldMap = baseMap + (key -> value)
+        val newMap = oldMap + (key  -> newValue)
+        newMap(key) == newValue
+    })
   }
 }
