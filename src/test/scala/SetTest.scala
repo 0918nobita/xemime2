@@ -1,4 +1,3 @@
-import org.scalacheck.{Arbitrary, Gen, Prop}
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatestplus.scalacheck.Checkers
 
@@ -61,6 +60,14 @@ class SetTest extends AnyFunSuite with Checkers {
     assert(map1 subsetOf map1)
     assert(map2 subsetOf map1)
     assert(!(map3 subsetOf map1))
+  }
+
+  test("Difference") {
+    val map1 = Set("a", "b", "c", "d")
+    val map2 = Set("b", "d")
+    assert((map1 diff map1) == Set())
+    assert((map1 diff map2) == Set("a", "c"))
+    assert((map2 diff map1) == Set())
   }
 
   test("Comparison") {
