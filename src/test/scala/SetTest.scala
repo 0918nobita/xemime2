@@ -29,6 +29,19 @@ class SetTest extends AnyFunSuite with Checkers {
     assert(!mySet("MI"))
   }
 
+  test("Remove elements") {
+    val map1 = Set("Michigan", "Ohio", "Wisconsin", "Iowa")
+    val map2 = map1 - "Michigan"
+    assert(!map2.contains("Michigan"))
+    assert(map1.contains("Michigan"))
+
+    val map3 = map2 - "Illinois"
+    assert(map2 == map3)
+
+    val map4 = map1 -- List("Michigan", "Wisconsin")
+    assert(map4 == Set("Ohio", "Iowa"))
+  }
+
   test("Comparison") {
     val set1 = Set("a", "b", "c")
     val set2 = Set("b", "c", "a")
