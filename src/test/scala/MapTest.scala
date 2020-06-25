@@ -41,4 +41,10 @@ class MapTest extends AnyFunSuite with Checkers {
         newMap(key) == newValue
     })
   }
+
+  test("Mixed type") {
+    val myMap = Map("Japan" -> "JP", 81 -> "JP")
+    assertResult("JP")(myMap("Japan"))
+    assertResult("JP")(myMap(81))
+  }
 }
