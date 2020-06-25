@@ -54,6 +54,15 @@ class SetTest extends AnyFunSuite with Checkers {
     assert((map1 union map2) == Set("a", "b", "c", "d"))
   }
 
+  test("Subset") {
+    val map1 = Set("a", "b", "c")
+    val map2 = Set("a", "c")
+    val map3 = Set("A", "c")
+    assert(map1 subsetOf map1)
+    assert(map2 subsetOf map1)
+    assert(!(map3 subsetOf map1))
+  }
+
   test("Comparison") {
     val set1 = Set("a", "b", "c")
     val set2 = Set("b", "c", "a")
