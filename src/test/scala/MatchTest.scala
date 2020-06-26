@@ -32,4 +32,21 @@ class MatchTest extends AnyFunSuite with Checkers {
 
     check(makeProp(matchFn2))
   }
+
+  test("Substitute parts of expressions / Use guards") {
+    def matchFn(pair: (Int, String)) =
+      pair match {
+        case (n, str) if n % 2 == 0 => s"2$str"
+        case (n, str) if n % 3 == 0 => s"3$str"
+        case (n, str) => s"($n)$str"
+      }
+
+    check(forAll { (pair: (Int, String)) =>
+      val (n, str) = pair
+      val result   = matchFn(pair)
+      (n % 2 == 0) ==> (result == s"2$str") ||
+      (n % 3 == 0) ==> (result == s"3$str") ||
+      result == s"($n)$str"
+    })
+  }
 }
