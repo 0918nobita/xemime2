@@ -1,4 +1,4 @@
-package vision.kodai.xemime
+package vision.kodai.xemime.ast
 
 import scala.util.parsing.input.Position
 
