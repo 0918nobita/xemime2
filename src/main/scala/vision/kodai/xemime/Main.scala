@@ -1,11 +1,24 @@
 package vision.kodai.xemime
 
+import scala.util.parsing.input.OffsetPosition
 import scalafx.application.JFXApp
 import scalafx.application.JFXApp.PrimaryStage
 import scalafx.scene.{Group, Scene}
 import scalafx.scene.text.Text
+import vision.kodai.xemime.ast.{AddOp, Ast, BinExpr, IntConst}
 
 object Main extends JFXApp {
+  val pos: OffsetPosition = OffsetPosition("", 0)
+
+  val expr: Ast = BinExpr(
+    pos,
+    lhs = IntConst(pos, 3),
+    op = AddOp(pos),
+    rhs = IntConst(pos, 4)
+  )
+
+  println(Runtime.run(expr))
+
   stage = new PrimaryStage {
     title = "Xemime"
     resizable = false
