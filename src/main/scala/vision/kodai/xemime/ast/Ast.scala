@@ -1,6 +1,6 @@
 package vision.kodai.xemime.ast
 
-import scala.util.parsing.input.Position
+import vision.kodai.xemime.Position
 
 trait Ast {
   val pos: Position

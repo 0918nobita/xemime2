@@ -1,6 +1,5 @@
 package vision.kodai.xemime
 
-import scala.util.parsing.input.OffsetPosition
 import scalafx.application.JFXApp
 import scalafx.application.JFXApp.PrimaryStage
 import scalafx.scene.{Group, Scene}
@@ -8,7 +7,7 @@ import scalafx.scene.text.Text
 import vision.kodai.xemime.ast.{AddOp, Ast, BinExpr, IntConst}
 
 object Main extends JFXApp {
-  val pos: OffsetPosition = OffsetPosition("", 0)
+  val pos: Position = CharPosition("internal", 0, 0)
 
   val expr: Ast = BinExpr(
     pos,
