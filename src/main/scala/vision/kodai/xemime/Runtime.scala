@@ -1,13 +1,21 @@
 package vision.kodai.xemime
 
-import vision.kodai.xemime.ast.{AddOp, Ast, BinExpr, DoubleConst, IntConst}
-import vision.kodai.xemime.entity.{XeDouble, XeInt, XeValue}
+import vision.kodai.xemime.ast.{
+  AddOp,
+  Ast,
+  BinExpr,
+  DoubleConst,
+  IntConst,
+  StrConst
+}
+import vision.kodai.xemime.entity.{XeDouble, XeInt, XeStr, XeValue}
 
 object Runtime {
   def run(program: Ast): Either[String, XeValue] =
     program match {
       case IntConst(_, value)    => Right(XeInt(value))
       case DoubleConst(_, value) => Right(XeDouble(value))
+      case StrConst(_, value)    => Right(XeStr(value))
       case BinExpr(_, lhs, AddOp(_), rhs) =>
         for {
           lhsVal <- run(lhs)
