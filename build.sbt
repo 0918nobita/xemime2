@@ -4,6 +4,9 @@ version := "0.1"
 
 scalaVersion := "2.13.2"
 
+scalacOptions ++= Seq("-deprecation", "-feature", "-unchecked", "-Xlint")
+scalacOptions in (Compile, console) ~= { _.filterNot(_ == "-Xlint") }
+
 // Run in separate VM, so there are no issues with double initialization of JavaFX
 fork := true
 fork in Test := true
