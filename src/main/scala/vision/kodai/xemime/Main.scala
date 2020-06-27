@@ -2,6 +2,7 @@ package vision.kodai.xemime
 
 import scalafx.application.JFXApp
 import scalafx.application.JFXApp.PrimaryStage
+import scalafx.concurrent.Task
 import scalafx.scene.{Group, Scene}
 import scalafx.scene.text.Text
 import vision.kodai.xemime.ast.{AddOp, Ast, BinExpr, IntConst}
@@ -17,6 +18,16 @@ object Main extends JFXApp {
   )
 
   println(Runtime.run(expr))
+
+  val task: Task[Unit] = Task {
+    println("Task started")
+    Thread.sleep(5000)
+    println("Task completed")
+  }
+
+  val thread: Thread = new Thread(task)
+  thread.setDaemon(true)
+  thread.start()
 
   stage = new PrimaryStage {
     title = "Xemime"
