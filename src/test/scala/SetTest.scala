@@ -1,7 +1,7 @@
 import org.scalatest.funsuite.AnyFunSuite
-import org.scalatestplus.scalacheck.Checkers
+import scala.annotation.nowarn
 
-class SetTest extends AnyFunSuite with Checkers {
+class SetTest extends AnyFunSuite {
   test("Initialization") {
     val set1 = Set("Michigan", "Ohio", "Wisconsin", "Iowa")
     assert(set1.size == 4)
@@ -17,13 +17,13 @@ class SetTest extends AnyFunSuite with Checkers {
   }
 
   test("Mixed type") {
-    val mySet = Set("Michigan", "Ohio", 12)
+    @nowarn val mySet = Set("Michigan", "Ohio", 12)
     assert(mySet.contains(12))
     assert(!mySet.contains("MI"))
   }
 
   test("Check member existence") {
-    val mySet = Set("Michigan", "Ohio", 12)
+    @nowarn val mySet = Set("Michigan", "Ohio", 12)
     assert(mySet(12))
     assert(!mySet("MI"))
   }
