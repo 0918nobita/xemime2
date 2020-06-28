@@ -1,7 +1,7 @@
 import org.scalacheck.{Gen, Prop}
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatestplus.scalacheck.Checkers
-import scala.util.parsing.combinator._
+import scala.util.parsing.combinator.{JavaTokenParsers, RegexParsers}
 
 class ParsecTest extends AnyFunSuite with Checkers {
   test("Regex parsers") {
@@ -28,5 +28,14 @@ class ParsecTest extends AnyFunSuite with Checkers {
         val result = SimpleParser.parse(SimpleParser.word, src)
         result.successful && result.get == s"$expected!"
     })
+  }
+
+  test("JavaTokenParsers.ident") {
+    object TokenParser extends JavaTokenParsers {
+      def parse(input: String): ParseResult[String] =
+        parseAll(ident, input)
+    }
+
+    assert(TokenParser.parse("a ").get == "a")
   }
 }
