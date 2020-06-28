@@ -2,6 +2,7 @@ import org.scalacheck.{Gen, Prop}
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatestplus.scalacheck.Checkers
 import scala.util.parsing.combinator.{JavaTokenParsers, RegexParsers}
+import scala.util.parsing.input.CharSequenceReader
 
 class ParsecTest extends AnyFunSuite with Checkers {
   test("Regex parsers") {
@@ -37,5 +38,18 @@ class ParsecTest extends AnyFunSuite with Checkers {
     }
 
     assert(TokenParser.parse("a ").get == "a")
+  }
+
+  test("case class `~` (A wrapper over sequence of matches)") {
+    object MyParser extends JavaTokenParsers {
+      def concat(p1: Parser[String], p2: Parser[String]): Parser[String] =
+        p1 ~ p2 ^^ { case a ~ b => a + b }
+
+      def parse(input: String): ParseResult[String] =
+        concat("a", "b")(new CharSequenceReader(input))
+    }
+
+    assert(MyParser.parse("ab ").get == "ab")
+    assert(!MyParser.parse("ax").successful)
   }
 }
