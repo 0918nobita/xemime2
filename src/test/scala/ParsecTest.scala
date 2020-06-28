@@ -3,6 +3,7 @@ import org.scalatest.funsuite.AnyFunSuite
 import org.scalatestplus.scalacheck.Checkers
 import scala.util.parsing.combinator.{JavaTokenParsers, RegexParsers}
 import scala.util.parsing.input.CharSequenceReader
+import scalacheck.util.ImplicitConversions._
 
 class ParsecTest extends AnyFunSuite with Checkers {
   test("Regex parsers") {
@@ -10,16 +11,9 @@ class ParsecTest extends AnyFunSuite with Checkers {
       def word: Parser[String] = "[a-z]+".r ^^ (_ + "!")
     }
 
-    val genNelOfAlphaLowerChars =
-      Gen.nonEmptyListOf(Gen.alphaLowerChar).map(_.mkString)
-
-    val genNelOfMarks = Gen
-      .nonEmptyListOf(Gen.oneOf(Seq('!', '\"', '$', '%', '&')))
-      .map(_.mkString)
-
     val gen = for {
-      forward  <- genNelOfAlphaLowerChars
-      backward <- genNelOfMarks
+      forward  <- Gen.nonEmptyLowerChars
+      backward <- Gen.nonEmptyStringOf(Gen.mark)
     } yield {
       (forward, forward + backward)
     }
@@ -34,10 +28,10 @@ class ParsecTest extends AnyFunSuite with Checkers {
   test("JavaTokenParsers.ident") {
     object TokenParser extends JavaTokenParsers {
       def parse(input: String): ParseResult[String] =
-        parseAll(ident, input)
+        ident(new CharSequenceReader(input))
     }
 
-    assert(TokenParser.parse("a ").get == "a")
+    assertResult("a")(TokenParser.parse("a ").get)
   }
 
   test("case class `~` (A wrapper over sequence of matches)") {
@@ -49,7 +43,7 @@ class ParsecTest extends AnyFunSuite with Checkers {
         concat("a", "b")(new CharSequenceReader(input))
     }
 
-    assert(MyParser.parse("ab ").get == "ab")
+    assertResult("ab")(MyParser.parse("ab ").get)
     assert(!MyParser.parse("ax").successful)
   }
 }
