@@ -1,26 +1,29 @@
-import org.scalacheck.{Gen, Prop}
+import org.scalacheck.Prop
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatestplus.scalacheck.Checkers
 import scala.util.parsing.combinator.{JavaTokenParsers, RegexParsers}
 import scala.util.parsing.input.CharSequenceReader
-import scalacheck.util.ImplicitConversions._
+import scalacheck.{ExtendedGen => ExGen}
 
 class ParsecTest extends AnyFunSuite with Checkers {
   test("Regex parsers") {
     object SimpleParser extends RegexParsers {
       def word: Parser[String] = "[a-z]+".r ^^ (_ + "!")
+
+      def parse(input: String): ParseResult[String] =
+        word(new CharSequenceReader(input))
     }
 
     val gen = for {
-      forward  <- Gen.nonEmptyLowerChars
-      backward <- Gen.nonEmptyStringOf(Gen.mark)
+      forward  <- ExGen.nonEmptyLowerChars
+      backward <- ExGen.nonEmptyStringOf(ExGen.mark)
     } yield {
       (forward, forward + backward)
     }
 
     check(Prop.forAll(gen) {
       case (expected, src) =>
-        val result = SimpleParser.parse(SimpleParser.word, src)
+        val result = SimpleParser.parse(src)
         result.successful && result.get == s"$expected!"
     })
   }

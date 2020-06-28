@@ -1,7 +1,6 @@
-package scalacheck.util
+package scalacheck
 
 import org.scalacheck.Gen
-import scala.language.implicitConversions
 
 object ExtendedGen {
   def mark: Gen[Char] = Gen.oneOf(Seq('!', '?', '\"', '$', '%', '&', '@'))
@@ -11,8 +10,4 @@ object ExtendedGen {
 
   def nonEmptyLowerChars: Gen[String] =
     ExtendedGen.nonEmptyStringOf(Gen.alphaLowerChar)
-}
-
-object ImplicitConversions {
-  implicit def convert(gen: Gen.type): ExtendedGen.type = ExtendedGen
 }
