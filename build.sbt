@@ -11,15 +11,11 @@ scalacOptions in (Compile, console) ~= { _.filterNot(_ == "-Xlint") }
 fork := true
 fork in Test := true
 
-lazy val osName = {
-  Map(
-    "Linux"   -> "linux",
-    "Mac"     -> "mac",
-    "Windows" -> "win"
-  ).getOrElse(
-    System.getProperty("os.name"),
-    throw new Exception("Unknown platform")
-  )
+lazy val osName = System.getProperty("os.name") match {
+  case "Linux" => "linux"
+  case "Mac" => "mac"
+  case name if name.startsWith("Windows") => "win"
+  case _ => throw new Exception("Unknown platform")
 }
 
 lazy val javaFXModules = Seq("controls", "fxml", "media")
