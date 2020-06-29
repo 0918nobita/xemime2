@@ -1,0 +1,19 @@
+name: Build
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '13.0.2'
+      - name: Init sbt
+        run: sbt
+        shell: bash
+      - name: Generate fat JAR
+        run: sbt assembly
+      - run: jlink --compress=2 --module-path "${JAVA_HOME}\jmods" --add-modules java.base,java.scripting,java.xml --output dist\min-jre
+      - run: ls dist
