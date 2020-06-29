@@ -34,7 +34,6 @@ libraryDependencies ++= Seq(
   "org.scalatestplus"          %% "scalacheck-1-14"          % "3.1.2.0" % Test
 )
 
-assemblyJarName in assembly := "xemime.jar"
 test in assembly := {}
 assemblyMergeStrategy in assembly := {
   case "module-info.class" => MergeStrategy.discard
@@ -42,4 +41,5 @@ assemblyMergeStrategy in assembly := {
     val oldStrategy = (assemblyMergeStrategy in assembly).value
     oldStrategy(x)
 }
+assemblyOutputPath in assembly := file("dist/xemime.jar")
 mainClass in assembly := Some("vision.kodai.xemime.Main")
