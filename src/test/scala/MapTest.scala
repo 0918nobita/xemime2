@@ -1,6 +1,7 @@
 import org.scalacheck.{Arbitrary, Gen, Prop}
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatestplus.scalacheck.Checkers
+import scala.annotation.nowarn
 
 class MapTest extends AnyFunSuite with Checkers {
   test("(->) operator") {
@@ -43,7 +44,7 @@ class MapTest extends AnyFunSuite with Checkers {
   }
 
   test("Mixed type") {
-    val myMap = Map("Japan" -> "JP", 81 -> "JP")
+    @nowarn val myMap = Map("Japan" -> "JP", 81 -> "JP")
     assertResult("JP")(myMap("Japan"))
     assertResult("JP")(myMap(81))
   }
