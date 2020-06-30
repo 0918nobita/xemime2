@@ -12,9 +12,9 @@ OutputBaseFilename=xemime_v2_setup
 Name: japanese; MessagesFile: compiler:Languages\Japanese.isl
 
 [Files]
-Source: "dist\min-jre\*"; DestDir: "{app}\min-jre"; Flags: ignoreversion recursesubdirs
-Source: "dist\launch.bat"; DestDir: "{app}"; Flags: ignoreversion
-Source: "dist\xemime.jar"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\dist\min-jre\*"; DestDir: "{app}\min-jre"; Flags: ignoreversion recursesubdirs
+Source: "..\dist\xemime.jar"; DestDir: "{app}"; Flags: ignoreversion
+Source: "launch.bat"; DestDir: "{app}"; Flags: ignoreversion
 
 [Tasks]
 Name: desktopicon; Description: "デスクトップにショートカットアイコンを作成する";

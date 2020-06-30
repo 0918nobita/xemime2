@@ -1,6 +1,5 @@
 .idea
-dist/*
-!launch.bat
+dist
 *.deb
 
 # Created by https://www.toptal.com/developers/gitignore/api/scala,sbt,visualstudiocode,vim,emacs
