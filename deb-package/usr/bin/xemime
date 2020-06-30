@@ -1,0 +1,3 @@
+#!/bin/sh -e
+
+echo "Welcome to Xemime!"

@@ -1,6 +1,7 @@
 .idea
 dist/*
 !launch.bat
+*.deb
 
 # Created by https://www.toptal.com/developers/gitignore/api/scala,sbt,visualstudiocode,vim,emacs
 # Edit at https://www.toptal.com/developers/gitignore?templates=scala,sbt,visualstudiocode,vim,emacs

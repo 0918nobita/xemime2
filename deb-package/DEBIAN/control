@@ -1,0 +1,5 @@
+Package: xemime
+Maintainer: Kodai Matsumoto <nobita.0918@gmail.com>
+Architecture: amd64
+Version: 0.1.0-PreAlpha-1
+Description: Interpreter for the Xemime programming language
