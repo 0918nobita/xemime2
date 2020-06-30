@@ -14,21 +14,17 @@ import vision.kodai.xemime.ast.{AddOp, Ast, BinExpr, IntConst}
 
 class App extends Application {
   override def start(stage: Stage): Unit = {
-    val pos: Position = CharPosition("internal", 0, 0)
-
-    val expr: Ast = BinExpr(
-      pos,
-      lhs = IntConst(pos, 3),
-      op = AddOp(pos),
-      rhs = IntConst(pos, 4)
-    )
-
-    println(Runtime.run(expr))
-
     val task: Task[Unit] = Task {
-      println("Task started")
-      Thread.sleep(5000)
-      println("Task completed")
+      val pos: Position = CharPosition("internal", 0, 0)
+
+      val expr: Ast = BinExpr(
+        pos,
+        lhs = IntConst(pos, 3),
+        op = AddOp(pos),
+        rhs = IntConst(pos, 4)
+      )
+
+      println(Runtime.run(expr))
     }
 
     val thread: Thread = new Thread(task)

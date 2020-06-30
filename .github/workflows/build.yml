@@ -18,14 +18,14 @@ jobs:
         run: |
           jlink --compress=2 \
             --module-path "${JAVA_HOME}\jmods" \
-            --add-modules java.base,java.scripting,java.xml \
+            --add-modules java.scripting,java.xml \
             --output deb-package/usr/lib/xemime/min-jre
       - run: chmod +x deb-package/usr/bin/xemime
       - run: dpkg-deb --build deb-package .
       - uses: actions/upload-artifact@v2
         with:
           name: debian
-          path: "*.deb"
+          path: '*.deb'
   windows:
     name: Generate installer for Windows
     runs-on: windows-latest
@@ -43,11 +43,11 @@ jobs:
         run: |
           jlink --compress=2 `
             --module-path "${JAVA_HOME}\jmods" `
-            --add-modules java.base,java.scripting,java.xml `
+            --add-modules java.scripting,java.xml `
             --output dist/min-jre
       - run: choco install innosetup
       - run: iscc windows/installer.iss
       - uses: actions/upload-artifact@v2
         with:
           name: windows
-          path: "windows/Output/*"
+          path: 'windows/Output/*'

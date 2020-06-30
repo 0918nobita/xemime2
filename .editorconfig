@@ -9,3 +9,7 @@ insert_final_newline = true
 
 [*.iss]
 charset = utf-8-bom
+
+[Makefile]
+indent_size = 4
+indent_style = tab

@@ -11,14 +11,14 @@ scalacOptions in (Compile, console) ~= { _.filterNot(_ == "-Xlint") }
 fork := true
 fork in Test := true
 
-lazy val osName = System.getProperty("os.name") match {
+val osName = System.getProperty("os.name") match {
   case "Linux" => "linux"
-  case "Mac" => "mac"
+  case name if name.startsWith("Mac") => "mac"
   case name if name.startsWith("Windows") => "win"
   case _ => throw new Exception("Unknown platform")
 }
 
-lazy val javaFXModules = Seq("controls", "fxml", "media")
+val javaFXModules = Seq("controls", "fxml", "media")
 
 libraryDependencies ++= javaFXModules.map(m =>
   "org.openjfx" % s"javafx-$m" % "14.0.1" classifier osName
