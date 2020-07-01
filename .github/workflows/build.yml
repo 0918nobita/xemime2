@@ -3,7 +3,21 @@ name: Build
 on: [push]
 
 jobs:
+  fat-jar:
+    name: Generate fat JAR
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '14.0.1'
+      - run: sbt core/assembly
+      - uses: actions/upload-artifact@v2
+        with:
+          name: fat-jar
+          path: dist/xemime.jar
   debian:
+    needs: fat-jar
     name: Generate .deb package
     runs-on: ubuntu-latest
     steps:
@@ -11,9 +25,10 @@ jobs:
       - uses: actions/setup-java@v1
         with:
           java-version: '14.0.1'
-      - name: Generate fat JAR
-        run: sbt core/assembly
-      - run: mv dist/xemime.jar deb-package/usr/lib/xemime/xemime.jar
+      - uses: actions/download-artifact@v2
+        with:
+          name: fat-jar
+          path: deb-package/usr/lib/xemime
       - name: Generate min JRE
         run: |
           jlink --compress=2 \
@@ -26,7 +41,31 @@ jobs:
         with:
           name: debian
           path: '*.deb'
+  macos:
+    needs: fat-jar
+    name: Generate App Bundle for macOS
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '14.0.1'
+      - uses: actions/download-artifact@v2
+        with:
+          name: fat-jar
+          path: Xemime.app/Contents/MacOS
+      - name: Generate min JRE
+        run: |
+          jlink --compress=2 \
+            --module-path "${JAVA_HOME}/jmods" \
+            --add-modules java.scripting,java.desktop \
+            --output Xemime.app/Contents/MacOS/min-jre
+      - uses: actions/upload-artifact@v2
+        with:
+          name: macOS
+          path: Xemime.app
   windows:
+    needs: fat-jar
     name: Generate installer for Windows
     runs-on: windows-latest
     steps:
@@ -34,17 +73,16 @@ jobs:
       - uses: actions/setup-java@v1
         with:
           java-version: '14.0.1'
-      - name: Init sbt
-        run: sbt version
-        shell: bash
-      - name: Generate fat JAR
-        run: sbt core/assembly
+      - uses: actions/download-artifact@v2
+        with:
+          name: fat-jar
+          path: dist
       - name: Generate min JRE
         run: |
           jlink --compress=2 `
             --module-path "${JAVA_HOME}\jmods" `
             --add-modules java.scripting,java.xml `
-            --output dist/min-jre
+            --output dist\min-jre
       - run: choco install innosetup
       - run: iscc windows/installer.iss
       - uses: actions/upload-artifact@v2
