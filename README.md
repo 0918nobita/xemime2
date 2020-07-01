@@ -5,13 +5,13 @@ implemented in Scala
 ## Run
 
 ```bash
-sbt run
+sbt core/run
 ```
 
 ## Test
 
 ```bash
-sbt test
+sbt core/test
 ```
 
 ## Generate executable JAR
