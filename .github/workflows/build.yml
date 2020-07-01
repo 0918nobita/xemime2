@@ -12,7 +12,7 @@ jobs:
         with:
           java-version: '14.0.1'
       - name: Generate fat JAR
-        run: sbt assembly
+        run: sbt core/assembly
       - run: mv dist/xemime.jar deb-package/usr/lib/xemime/xemime.jar
       - name: Generate min JRE
         run: |
@@ -38,7 +38,7 @@ jobs:
         run: sbt version
         shell: bash
       - name: Generate fat JAR
-        run: sbt assembly
+        run: sbt core/assembly
       - name: Generate min JRE
         run: |
           jlink --compress=2 `

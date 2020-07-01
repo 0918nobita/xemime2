@@ -11,6 +11,7 @@ import scalafx.concurrent.Task
 import scalafx.scene.Scene
 import scalafx.scene.image.Image
 import vision.kodai.xemime.ast.{AddOp, Ast, BinExpr, IntConst}
+import vision.kodai.xemime.macros._
 
 class App extends Application {
   override def start(stage: Stage): Unit = {
@@ -25,6 +26,8 @@ class App extends Application {
       )
 
       println(Runtime.run(expr))
+
+      println(desugar(List(6, 4, 5).sorted))
     }
 
     val thread: Thread = new Thread(task)
