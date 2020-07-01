@@ -3,32 +3,17 @@ name: Build
 on: [push]
 
 jobs:
-  fat-jar:
-    name: Generate fat JAR
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-java@v1
-        with:
-          java-version: '14.0.1'
-      - run: sbt core/assembly
-      - uses: actions/upload-artifact@v2
-        with:
-          name: fat-jar
-          path: dist/xemime.jar
   debian:
-    needs: fat-jar
     name: Generate .deb package
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-java@v1
+      - uses: olafurpg/setup-scala@v6
         with:
-          java-version: '14.0.1'
-      - uses: actions/download-artifact@v2
-        with:
-          name: fat-jar
-          path: deb-package/usr/lib/xemime
+          java-version: openjdk@1.14
+      - name: Generate fat JAR
+        run: sbt assembly
+      - run: mv dist/xemime.jar deb-package/usr/lib/xemime/xemime.jar
       - name: Generate min JRE
         run: |
           jlink --compress=2 \
@@ -41,42 +26,59 @@ jobs:
         with:
           name: debian
           path: '*.deb'
+
   macos:
-    needs: fat-jar
-    name: Generate App Bundle for macOS
+    name: Generate .dmg for macOS
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-java@v1
+      - uses: olafurpg/setup-scala@v6
         with:
-          java-version: '14.0.1'
-      - uses: actions/download-artifact@v2
-        with:
-          name: fat-jar
-          path: Xemime.app/Contents/MacOS
+          java-version: openjdk@1.14
+      - name: Generate fat JAR
+        run: sbt assembly
+      - run: mv dist/xemime.jar macOS/Xemime.app/Contents/MacOS/xemime.jar
       - name: Generate min JRE
         run: |
           jlink --compress=2 \
             --module-path "${JAVA_HOME}/jmods" \
             --add-modules java.scripting,java.desktop \
-            --output Xemime.app/Contents/MacOS/min-jre
+            --output macOS/Xemime.app/Contents/MacOS/min-jre
+      - run: chmod +x macOS/Xemime.app/Contents/MacOS/launch.sh
+      - name: Install create-dmg
+        run: |
+          brew update
+          brew install create-dmg
+      - name: Exec create-dmg
+        run: |
+          create-dmg \
+            --volname "Xemime 0.1.0 Pre-Alpha Installer" \
+            --volicon macOS/Xemime.app/Contents/Resources/app.icns \
+            --window-pos 200 120 \
+            --window-size 800 400 \
+            --icon-size 100 \
+            --icon "Xemime.app" 200 190 \
+            --hide-extension "Xemime.app" \
+            --app-drop-link 600 185 \
+            --no-internet-enable \
+            Xemime-0.1.0-PA-Installer.dmg \
+            macOS
       - uses: actions/upload-artifact@v2
         with:
           name: macOS
-          path: Xemime.app
+          path: '*.dmg'
+
   windows:
-    needs: fat-jar
     name: Generate installer for Windows
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-java@v1
+      - uses: olafurpg/setup-scala@v6
         with:
-          java-version: '14.0.1'
-      - uses: actions/download-artifact@v2
-        with:
-          name: fat-jar
-          path: dist
+          java-version: openjdk@1.14
+      - name: Generate fat JAR
+        run: sbt assembly
+        shell: bash
       - name: Generate min JRE
         run: |
           jlink --compress=2 `
