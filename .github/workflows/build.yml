@@ -85,7 +85,6 @@ jobs:
             --module-path "${JAVA_HOME}\jmods" `
             --add-modules java.scripting,java.xml `
             --output dist\min-jre
-      - run: choco install innosetup
       - run: iscc windows/installer.iss
       - uses: actions/upload-artifact@v2
         with:
